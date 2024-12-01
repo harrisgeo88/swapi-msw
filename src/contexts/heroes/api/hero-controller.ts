@@ -2,6 +2,8 @@ import axios from "axios";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
+import { config } from "@/app/config/config";
+
 import { Logger } from "@/shared/logger/logger";
 
 interface Hero {
@@ -50,6 +52,8 @@ function calculateWeight(weight: number): "heavy" | "light" {
   return "light";
 }
 
+const BASE_URL = config.server.base_url;
+
 export class HeroController {
   private readonly logger;
 
@@ -58,9 +62,10 @@ export class HeroController {
   }
 
   private async getHero(id: string): Promise<HeroResponse> {
-    const hero = (await axios.get(
-      `https://swapi.dev/api/people/${id}`,
-    )) as unknown as { data: Hero };
+    //   `https://swapi.dev/api/people/${id}`,
+    const hero = (await axios.get(`${BASE_URL}/people/${id}`)) as unknown as {
+      data: Hero;
+    };
     this.logger.info("Hero", { hero: hero.data });
 
     return {

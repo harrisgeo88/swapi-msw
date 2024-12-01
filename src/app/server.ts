@@ -1,6 +1,7 @@
 import http from "node:http";
 import { AddressInfo } from "node:net";
 
+import { config as dotenvConfig } from "dotenv";
 import express, { Express } from "express";
 
 import { config } from "@/app/config/config";
@@ -12,6 +13,7 @@ import { Logger } from "@/shared/logger/logger";
 import { heroRouter } from "@/contexts/heroes/api/hero-router";
 import { userRouter } from "@/contexts/users/api/user-router";
 
+dotenvConfig();
 export class Server {
   private readonly app: Express;
   private httpServer?: http.Server;
